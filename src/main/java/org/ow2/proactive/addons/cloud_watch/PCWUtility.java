@@ -47,8 +47,8 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.util.EntityUtils;
 
 public class PCWUtility {
-//    private static final String PCW_REST_URL = "http://localhost:8080/proactive-cloud-watch/rules/";
-    private static final String PCW_REST_URL = "http://localhost:8080/rules/";
+    private static final String PCW_REST_URL = "http://localhost:8080/proactive-cloud-watch/rules/";
+//    private static final String PCW_REST_URL = "http://localhost:8080/rules/";
 
     /**
      * method make Post call to REST API of Proactive Cloud Watch service for adding rule and starting polling
@@ -73,6 +73,17 @@ public class PCWUtility {
         String contentRule = new String(Files.readAllBytes(Paths.get(ruleFilePath)));
         request.bodyString(contentRule, ContentType.TEXT_PLAIN);
         return executeRequestAndCheck(request, HttpURLConnection.HTTP_CREATED);
+    }
+
+    /**
+     * method make Delete call to REST API of Proactive Cloud Watch service for deleting rule and stop polling
+     * @param  ruleName a rule identifier
+     * @throws IOException
+     */
+    public static RestResponse deleteRule(String ruleName) throws IOException {
+        Request request = Request.Delete(PCW_REST_URL + "/" + ruleName);
+        request.addHeader("Content-Type", "application/json");
+        return executeRequestAndCheck(request, HttpURLConnection.HTTP_OK);
     }
 
     private static RestResponse executeRequestAndCheck(Request request, int httpOkStatus) throws IOException {
