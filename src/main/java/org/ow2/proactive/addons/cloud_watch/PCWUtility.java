@@ -48,7 +48,6 @@ import org.apache.http.util.EntityUtils;
 
 public class PCWUtility {
     private static final String PCW_REST_URL = "http://localhost:8080/proactive-cloud-watch/rules/";
-//    private static final String PCW_REST_URL = "http://localhost:8080/rules/";
 
     /**
      * method make Post call to REST API of Proactive Cloud Watch service for adding rule and starting polling
@@ -86,12 +85,12 @@ public class PCWUtility {
         return executeRequestAndCheck(request, HttpURLConnection.HTTP_OK);
     }
 
-    private static RestResponse executeRequestAndCheck(Request request, int httpOkStatus) throws IOException {
+    private static RestResponse executeRequestAndCheck(Request request, int httpSuccessfulStatus) throws IOException {
         RestResponse response = executeRequest(request);
-        return checkResponseIsOK(response, httpOkStatus);
+        return checkResponseIsSucessful(response, httpSuccessfulStatus);
     }
 
-    private static RestResponse checkResponseIsOK(RestResponse response, int successfulStatus) {
+    private static RestResponse checkResponseIsSucessful(RestResponse response, int successfulStatus) {
         if (response.getResponseCode() != successfulStatus) {
             throw new RuntimeException("Failed : HTTP error code : " + response.getResponseCode()
                     + "\n Response: " + response.getResponse());
