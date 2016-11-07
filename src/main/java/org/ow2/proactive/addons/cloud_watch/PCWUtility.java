@@ -85,12 +85,22 @@ public class PCWUtility {
         return executeRequestAndCheck(request, HttpURLConnection.HTTP_OK);
     }
 
-    private static RestResponse executeRequestAndCheck(Request request, int httpSuccessfulStatus) throws IOException {
-        RestResponse response = executeRequest(request);
-        return checkResponseIsSucessful(response, httpSuccessfulStatus);
+    /**
+     * method gets the identifiers of all running rules in Proactive Cloud Watch service via call to REST API of PCW
+     * @throws IOException
+     */
+    public static String getRules() throws IOException {
+        Request request = Request.Get(PCW_REST_URL);
+        request.addHeader("Content-Type", "application/json");
+        return executeRequestAndCheck(request, HttpURLConnection.HTTP_OK).getResponse();
     }
 
-    private static RestResponse checkResponseIsSucessful(RestResponse response, int successfulStatus) {
+    private static RestResponse executeRequestAndCheck(Request request, int httpSuccessfulStatus) throws IOException {
+        RestResponse response = executeRequest(request);
+        return checkResponseIsSuccessful(response, httpSuccessfulStatus);
+    }
+
+    private static RestResponse checkResponseIsSuccessful(RestResponse response, int successfulStatus) {
         if (response.getResponseCode() != successfulStatus) {
             throw new RuntimeException("Failed : HTTP error code : " + response.getResponseCode()
                     + "\n Response: " + response.getResponse());
