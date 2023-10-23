@@ -75,7 +75,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.httpcomponents/fluent-hc
     compile group: 'org.apache.httpcomponents', name: 'fluent-hc', version: '4.5.2'
 
-    compile 'org.json:json:20160810'
+    compile 'org.json:json:20231013'
 
     testCompile 'org.hamcrest:java-hamcrest:2.0.0.0'
     testCompile 'com.google.truth:truth:0.28'
